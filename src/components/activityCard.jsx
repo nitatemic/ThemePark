@@ -1,40 +1,110 @@
-import React from "react";
-import "../shared/tailwindcss.css";
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+const ExpandMore = styled((props) => {
+	const { expand, ...other } = props;
+	return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+	transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+	marginLeft: 'auto',
+	transition: theme.transitions.create('transform', {
+		duration: theme.transitions.duration.shortest,
+	}),
+}));
 
 export default function ActivityCard() {
+	const [expanded, setExpanded] = React.useState(false);
+
+	const handleExpandClick = () => {
+		setExpanded(!expanded);
+	};
+
 	return (
-		<>
-			<div className="w-full flex items-center justify-center">
-				<div
-					className="xl:w-1/4 sm:w-1/2 w-full 2xl:w-1/5 flex flex-col items-center py-16 md:py-12 bg-gradient-to-r from-indigo-700 to-purple-500 rounded-lg">
-					<div className="w-full flex items-center justify-center">
-						<div className="flex flex-col items-center">
-							<img
-								src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F4.bp.blogspot.com%2F-lHfZNXUUJUU%2FWxmAufNCSdI%2FAAAAAAAAH8E%2FURQjTY6-zYIhub3rm6H3V6-UFZp9-j3AQCLcBGAs%2Fs1600%2Fhyperspace-mountain-star-wars-disneyland-paris.jpg&f=1&nofb=1"
-								alt="activity" className="w-full"/>
-							<p
-								className="mt-2 text-xs sm:text-sm md:text-base font-semibold text-center text-white">Une
-								attraction</p>
-						</div>
-					</div>
-					<div className="flex items-center mt-7">
-						<div className>
-							<p className="text-xs text-gray-300">Taille requise</p>
-							<p className="mt-2 text-base sm:text-lg md:text-xl 2xl:text-2xl text-gray-50">1,20
-								M</p>
-						</div>
-						<div className="ml-12">
-							<p className="text-xs text-gray-300">Transfert requis</p>
-							<p
-								className="mt-2 text-base sm:text-lg md:text-xl 2xl:text-2xl text-gray-50">$2890</p>
-						</div>
-						<div className="ml-12">
-							<p className="text-xs text-gray-300">Average</p>
-							<p className="mt-2 text-base sm:text-lg md:text-xl 2xl:text-2xl text-gray-50">$169</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
+		<Card sx={{ maxWidth: 345 }}>
+			<CardHeader
+				avatar={
+					<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+						R
+					</Avatar>
+				}
+				action={
+					<IconButton aria-label="settings">
+						<MoreVertIcon/>
+					</IconButton>
+				}
+				title="Shrimp and Chorizo Paella"
+				subheader="September 14, 2016"
+			/>
+			<CardMedia
+				component="img"
+				height="194"
+				image="/static/images/cards/paella.jpg"
+				alt="Paella dish"
+			/>
+			<CardContent>
+				<Typography variant="body2" color="text.secondary">
+					Description de l'attraction
+				</Typography>
+			</CardContent>
+			<CardActions disableSpacing>
+				<IconButton aria-label="add to favorites">
+					<FavoriteIcon/>
+				</IconButton>
+				<IconButton aria-label="share">
+					<ShareIcon/>
+				</IconButton>
+				<ExpandMore
+					expand={expanded}
+					onClick={handleExpandClick}
+					aria-expanded={expanded}
+					aria-label="show more"
+				>
+					<ExpandMoreIcon/>
+				</ExpandMore>
+			</CardActions>
+			<Collapse in={expanded} timeout="auto" unmountOnExit>
+				<CardContent>
+					<Typography paragraph>Method:</Typography>
+					<Typography paragraph>
+						Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
+						aside for 10 minutes.
+					</Typography>
+					<Typography paragraph>
+						Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
+						medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
+						occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
+						large plate and set aside, leaving chicken and chorizo in the pan. Add
+						pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
+						stirring often until thickened and fragrant, about 10 minutes. Add
+						saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+					</Typography>
+					<Typography paragraph>
+						Add rice and stir very gently to distribute. Top with artichokes and
+						peppers, and cook without stirring, until most of the liquid is absorbed,
+						15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
+						mussels, tucking them down into the rice, and cook again without
+						stirring, until mussels have opened and rice is just tender, 5 to 7
+						minutes more. (Discard any mussels that don&apos;t open.)
+					</Typography>
+					<Typography>
+						Set aside off of the heat to let rest for 10 minutes, and then serve.
+					</Typography>
+				</CardContent>
+			</Collapse>
+		</Card>
 	);
 }
